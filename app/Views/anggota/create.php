@@ -46,7 +46,7 @@
             <input type="number" name="jumlah_anak" class="form-control" value="0" min="0">
         </div>
         <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="/dashboard" class="btn btn-secondary">Kembali</a>
+        <a href="/anggota" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 <?= $this->endSection() ?>
