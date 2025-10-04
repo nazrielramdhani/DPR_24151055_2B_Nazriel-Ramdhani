@@ -8,6 +8,12 @@
     <?php endif; ?>
 </div>
 
+<?php if (session()->getFlashdata('success')): ?>
+    <div class="alert alert-success">
+        <?= session()->getFlashdata('success') ?>
+    </div>
+<?php endif; ?>
+
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
@@ -34,6 +40,10 @@
                 <?php if (session()->get('user')['role'] === 'Admin'): ?>
                     <td>
                         <a href="/anggota/edit/<?= $a['id_anggota'] ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="/anggota/delete/<?= $a['id_anggota'] ?>" method="post" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
                     </td>
                 <?php endif; ?>
             </tr>
