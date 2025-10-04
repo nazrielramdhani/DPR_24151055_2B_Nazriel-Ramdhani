@@ -18,3 +18,6 @@ $routes->post('/anggota/store', 'Anggota::store');
 $routes->get('/anggota/edit/(:num)', 'Anggota::edit/$1');
 $routes->post('/anggota/update/(:num)', 'Anggota::update/$1');
 $routes->post('/anggota/delete/(:num)', 'Anggota::delete/$1');
+
+$routes->get('/komponen', 'KomponenGaji::index');
+$routes->get('/komponen/create', 'KomponenGaji::create');
