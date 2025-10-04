@@ -186,4 +186,45 @@ class Penggajian extends BaseController
             return redirect()->to('/penggajian')->with('error', 'Gagal menghapus data.');
         }
     }
+
+    public function detail($idAnggota = null)
+    {
+        $anggotaModel   = new \App\Models\AnggotaModel();
+        $penggajianModel = new \App\Models\PenggajianModel();
+        $komponenModel  = new \App\Models\KomponenGajiModel();
+
+        $anggota = $anggotaModel->find($idAnggota);
+        if (! $anggota) {
+            return redirect()->to('/penggajian')->with('error', 'Anggota tidak ditemukan.');
+        }
+
+        $dataPenggajian = $penggajianModel
+            ->where('id_anggota', $idAnggota)
+            ->findAll();
+
+        $detailKomponen = [];
+        $total = 0;
+        foreach ($dataPenggajian as $row) {
+            $komponen = $komponenModel->find($row['id_komponen_gaji']);
+            if ($komponen) {
+                $detailKomponen[] = [
+                    'nama_komponen' => $komponen['nama_komponen'],
+                    'kategori'      => $komponen['kategori'],
+                    'jabatan'       => $komponen['jabatan'],
+                    'nominal'       => $komponen['nominal'],
+                    'satuan'        => $komponen['satuan'],
+                ];
+                $total += $komponen['nominal'];
+            }
+        }
+
+        $data = [
+            'anggota' => $anggota,
+            'detailKomponen' => $detailKomponen,
+            'total' => $total,
+        ];
+
+        return view('penggajian/detail', $data);
+    }
+
 }

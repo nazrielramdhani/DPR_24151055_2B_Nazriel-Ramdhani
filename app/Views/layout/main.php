@@ -10,39 +10,41 @@
 
 <body class="bg-light">
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/dashboard">DPR App</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <?php if (session()->has('user')): ?>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/dashboard">DPR App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item me-3">
-            <a class="nav-link" href="/anggota">Data Anggota</a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-link" href="/komponen">Komponen Gaji</a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-link" href="/penggajian">Data Penggajian</a>
-          </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item me-3">
+              <a class="nav-link" href="/anggota">Data Anggota</a>
+            </li>
 
-        <div class="d-flex">
-          <?php if (session()->has('user')): ?>
+            <?php if (session()->get('user')['role'] === 'Admin'): ?>
+              <li class="nav-item me-3">
+                <a class="nav-link" href="/komponen">Komponen Gaji</a>
+              </li>
+            <?php endif; ?>
+
+            <li class="nav-item me-3">
+              <a class="nav-link" href="/penggajian">Data Penggajian</a>
+            </li>
+          </ul>
+
+          <div class="d-flex">
             <a href="/logout" class="btn btn-outline-light ms-3">Logout</a>
-          <?php endif; ?>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  <?php endif; ?>
 
-  <!-- Main content -->
-  <div class="container">
+  <div class="container mt-5">
     <?= $this->renderSection('content') ?>
   </div>
 
