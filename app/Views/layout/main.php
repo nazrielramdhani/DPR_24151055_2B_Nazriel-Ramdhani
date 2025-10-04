@@ -27,6 +27,9 @@
           <li class="nav-item me-3">
             <a class="nav-link" href="/komponen">Komponen Gaji</a>
           </li>
+          <li class="nav-item me-3">
+            <a class="nav-link" href="/penggajian">Data Penggajian</a>
+          </li>
         </ul>
 
         <div class="d-flex">

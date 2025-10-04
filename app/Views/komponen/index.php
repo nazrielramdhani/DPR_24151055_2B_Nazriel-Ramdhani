@@ -17,7 +17,7 @@
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
-            <th>ID</th>
+            <th>ID Komponen</th>
             <th>Nama Komponen</th>
             <th>Kategori</th>
             <th>Jabatan</th>

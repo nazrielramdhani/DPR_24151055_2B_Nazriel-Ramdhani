@@ -8,6 +8,34 @@ use App\Models\KomponenGajiModel;
 
 class Penggajian extends BaseController
 {
+    public function index()
+{
+    $penggajianModel = new PenggajianModel();
+    $anggotaModel    = new AnggotaModel();
+    $komponenModel   = new KomponenGajiModel();
+
+    $dataPenggajian = $penggajianModel->findAll();
+
+    $result = [];
+    foreach ($dataPenggajian as $row) {
+        $anggota  = $anggotaModel->find($row['id_anggota']);
+        $komponen = $komponenModel->find($row['id_komponen_gaji']);
+
+        $result[] = [
+            'id_anggota' => $anggota['id_anggota'] ?? '-',
+            'nama_anggota' => trim(($anggota['gelar_depan'] ?? '') . ' ' . $anggota['nama_depan'] . ' ' . $anggota['nama_belakang'] . ' ' . ($anggota['gelar_belakang'] ?? '')),
+            'jabatan' => $anggota['jabatan'] ?? '-',
+            'nama_komponen' => $komponen['nama_komponen'] ?? '-',
+            'kategori' => $komponen['kategori'] ?? '-',
+            'nominal' => $komponen['nominal'] ?? 0,
+            'satuan' => $komponen['satuan'] ?? '-',
+        ];
+    }
+
+    $data['penggajian'] = $result;
+
+    return view('penggajian/index', $data);
+}
     public function create()
     {
         $anggotaModel   = new AnggotaModel();
