@@ -23,3 +23,5 @@ $routes->get('/komponen', 'KomponenGaji::index');
 $routes->get('/komponen/create', 'KomponenGaji::create');
 $routes->get('/komponen/edit/(:num)', 'KomponenGaji::edit/$1');
 $routes->post('/komponen/update/(:num)', 'KomponenGaji::update/$1');
+$routes->post('/komponen/store', 'KomponenGaji::store');
+$routes->post('/komponen/delete/(:num)', 'KomponenGaji::delete/$1');

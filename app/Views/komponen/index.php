@@ -40,6 +40,10 @@
                 <?php if (session()->get('user')['role'] === 'Admin'): ?>
                     <td>
                         <a href="/komponen/edit/<?= $k['id_komponen_gaji'] ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="/komponen/delete/<?= $k['id_komponen_gaji'] ?>" method="post" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
                     </td>
                 <?php endif; ?>
             </tr>
