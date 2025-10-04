@@ -3,7 +3,9 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Daftar Komponen Gaji & Tunjangan</h2>
-    <a href="/komponen/create" class="btn btn-primary">Tambah Komponen</a>
+    <?php if (session()->get('user')['role'] === 'Admin'): ?>
+        <a href="/komponen/create" class="btn btn-primary">Tambah Komponen</a>
+    <?php endif; ?>
 </div>
 
 <?php if (session()->getFlashdata('success')): ?>
