@@ -19,7 +19,7 @@
 <table class="table table-bordered table-striped mt-3">
   <thead class="table-dark">
     <tr>
-      <th>ID Penggajian</th>
+      <th>ID</th>
       <th>Nama Anggota</th>
       <th>Jabatan</th>
       <th>Komponen Gaji</th>
@@ -47,6 +47,12 @@
           <?php if (session()->get('user')['role'] === 'Admin'): ?>
             <td>
                 <a href="/penggajian/edit/<?= $row['id_anggota'] ?>/<?= $row['nama_komponen'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                  <form action="/penggajian/delete" method="post" style="display:inline" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="id_anggota" value="<?= $row['id_anggota'] ?>">
+                        <input type="hidden" name="nama_komponen" value="<?= $row['nama_komponen'] ?>">
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                </form>
             </td>
           <?php endif; ?>
         </tr>

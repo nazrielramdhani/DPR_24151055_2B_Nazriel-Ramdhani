@@ -9,33 +9,34 @@ use App\Models\KomponenGajiModel;
 class Penggajian extends BaseController
 {
     public function index()
-{
-    $penggajianModel = new PenggajianModel();
-    $anggotaModel    = new AnggotaModel();
-    $komponenModel   = new KomponenGajiModel();
+    {
+        $penggajianModel = new PenggajianModel();
+        $anggotaModel    = new AnggotaModel();
+        $komponenModel   = new KomponenGajiModel();
 
-    $dataPenggajian = $penggajianModel->findAll();
+        $dataPenggajian = $penggajianModel->findAll();
 
-    $result = [];
-    foreach ($dataPenggajian as $row) {
-        $anggota  = $anggotaModel->find($row['id_anggota']);
-        $komponen = $komponenModel->find($row['id_komponen_gaji']);
+        $result = [];
+        foreach ($dataPenggajian as $row) {
+            $anggota  = $anggotaModel->find($row['id_anggota']);
+            $komponen = $komponenModel->find($row['id_komponen_gaji']);
 
-        $result[] = [
-            'id_anggota' => $anggota['id_anggota'] ?? '-',
-            'nama_anggota' => trim(($anggota['gelar_depan'] ?? '') . ' ' . $anggota['nama_depan'] . ' ' . $anggota['nama_belakang'] . ' ' . ($anggota['gelar_belakang'] ?? '')),
-            'jabatan' => $anggota['jabatan'] ?? '-',
-            'nama_komponen' => $komponen['nama_komponen'] ?? '-',
-            'kategori' => $komponen['kategori'] ?? '-',
-            'nominal' => $komponen['nominal'] ?? 0,
-            'satuan' => $komponen['satuan'] ?? '-',
-        ];
+            $result[] = [
+                'id_anggota' => $anggota['id_anggota'] ?? '-',
+                'nama_anggota' => trim(($anggota['gelar_depan'] ?? '') . ' ' . $anggota['nama_depan'] . ' ' . $anggota['nama_belakang'] . ' ' . ($anggota['gelar_belakang'] ?? '')),
+                'jabatan' => $anggota['jabatan'] ?? '-',
+                'nama_komponen' => $komponen['nama_komponen'] ?? '-',
+                'kategori' => $komponen['kategori'] ?? '-',
+                'nominal' => $komponen['nominal'] ?? 0,
+                'satuan' => $komponen['satuan'] ?? '-',
+            ];
+        }
+
+        $data['penggajian'] = $result;
+
+        return view('penggajian/index', $data);
     }
 
-    $data['penggajian'] = $result;
-
-    return view('penggajian/index', $data);
-}
     public function create()
     {
         $anggotaModel   = new AnggotaModel();
@@ -46,6 +47,7 @@ class Penggajian extends BaseController
 
         return view('penggajian/create', $data);
     }
+
     public function store()
     {
         $penggajianModel = new PenggajianModel();
@@ -89,6 +91,7 @@ class Penggajian extends BaseController
 
         return redirect()->to('/penggajian/create')->with('success', 'Komponen gaji berhasil ditambahkan.');
     }
+
     public function edit($idAnggota = null, $namaKomponen = null)
     {
         $anggotaModel   = new AnggotaModel();
@@ -113,7 +116,7 @@ class Penggajian extends BaseController
 
         return view('penggajian/edit', $data);
     }
-
+    
     public function update()
     {
         $penggajianModel = new PenggajianModel();
@@ -156,5 +159,31 @@ class Penggajian extends BaseController
         ]);
 
         return redirect()->to('/penggajian')->with('success', 'Data penggajian berhasil diubah.');
+    }
+
+    public function delete()
+    {
+        $idAnggota = $this->request->getPost('id_anggota');
+        $namaKomponen = $this->request->getPost('nama_komponen');
+
+        $penggajianModel = new PenggajianModel();
+        $komponenModel = new KomponenGajiModel();
+
+        $komponen = $komponenModel->where('nama_komponen', $namaKomponen)->first();
+
+        if (! $komponen) {
+            return redirect()->to('/penggajian')->with('error', 'Komponen tidak ditemukan.');
+        }
+
+        $deleted = $penggajianModel
+            ->where('id_anggota', $idAnggota)
+            ->where('id_komponen_gaji', $komponen['id_komponen_gaji'])
+            ->delete();
+
+        if ($deleted) {
+            return redirect()->to('/penggajian')->with('success', 'Data penggajian berhasil dihapus.');
+        } else {
+            return redirect()->to('/penggajian')->with('error', 'Gagal menghapus data.');
+        }
     }
 }
