@@ -3,7 +3,7 @@
 <?= $this->section('title') ?>Login<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<div class="d-flex justify-content-center align-items-center vh-100">
+<div class="d-flex justify-content-center align-items-center vh-10">
     <div class="card shadow p-4" style="width: 22rem;">
         <h3 class="text-center mb-4">Login</h3>
         <form method="post" action="/login">
