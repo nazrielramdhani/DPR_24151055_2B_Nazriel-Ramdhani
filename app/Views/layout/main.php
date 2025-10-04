@@ -13,7 +13,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">DPRApp</a>
+      <a class="navbar-brand" href="/dashboard">DPRApp</a>
       <div class="d-flex">
         <?php if (session()->has('user')): ?>
           <a href="/logout" class="btn btn-outline-light">Logout</a>
