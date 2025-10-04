@@ -26,11 +26,14 @@
       <th>Kategori</th>
       <th>Nominal</th>
       <th>Satuan</th>
+      <?php if (session()->get('user')['role'] === 'Admin'): ?>
+            <th>Aksi</th>
+        <?php endif; ?>
     </tr>
   </thead>
   <tbody>
     <?php if (empty($penggajian)): ?>
-      <tr><td colspan="7" class="text-center">Belum ada data penggajian</td></tr>
+      <tr><td colspan="8" class="text-center">Belum ada data penggajian</td></tr>
     <?php else: ?>
       <?php foreach ($penggajian as $i => $row): ?>
         <tr>
@@ -41,6 +44,11 @@
           <td><?= esc($row['kategori']) ?></td>
           <td><?= number_format($row['nominal'], 0, ',', '.') ?></td>
           <td><?= esc($row['satuan']) ?></td>
+          <?php if (session()->get('user')['role'] === 'Admin'): ?>
+            <td>
+                <a href="/penggajian/edit/<?= $row['id_anggota'] ?>/<?= $row['nama_komponen'] ?>" class="btn btn-warning btn-sm">Edit</a>
+            </td>
+          <?php endif; ?>
         </tr>
       <?php endforeach; ?>
     <?php endif; ?>

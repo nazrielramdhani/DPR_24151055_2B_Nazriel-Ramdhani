@@ -29,3 +29,5 @@ $routes->post('/komponen/delete/(:num)', 'KomponenGaji::delete/$1');
 $routes->get('/penggajian', 'Penggajian::index');
 $routes->get('/penggajian/create', 'Penggajian::create');
 $routes->post('/penggajian/store', 'Penggajian::store');
+$routes->get('/penggajian/edit/(:num)/(:any)', 'Penggajian::edit/$1/$2');
+$routes->post('/penggajian/update', 'Penggajian::update');
