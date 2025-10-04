@@ -25,3 +25,6 @@ $routes->get('/komponen/edit/(:num)', 'KomponenGaji::edit/$1');
 $routes->post('/komponen/update/(:num)', 'KomponenGaji::update/$1');
 $routes->post('/komponen/store', 'KomponenGaji::store');
 $routes->post('/komponen/delete/(:num)', 'KomponenGaji::delete/$1');
+
+$routes->get('/penggajian/create', 'Penggajian::create');
+$routes->post('/penggajian/store', 'Penggajian::store');
