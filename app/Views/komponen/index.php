@@ -23,6 +23,9 @@
             <th>Jabatan</th>
             <th>Nominal</th>
             <th>Satuan</th>
+            <?php if (session()->get('user')['role'] === 'Admin'): ?>
+                <th>Aksi</th>
+            <?php endif; ?>
         </tr>
     </thead>
     <tbody>
@@ -34,6 +37,11 @@
                 <td><?= esc($k['jabatan']) ?></td>
                 <td><?= number_format($k['nominal'], 2, ',', '.') ?></td>
                 <td><?= esc($k['satuan']) ?></td>
+                <?php if (session()->get('user')['role'] === 'Admin'): ?>
+                    <td>
+                        <a href="/komponen/edit/<?= $k['id_komponen_gaji'] ?>" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
     </tbody>

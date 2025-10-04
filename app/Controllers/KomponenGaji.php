@@ -35,4 +35,34 @@ class KomponenGaji extends BaseController
 
         return redirect()->to('/komponen')->with('success', 'Komponen gaji berhasil ditambahkan.');
     }
+
+    // Edit Komponen Gaji
+    public function edit($id)
+    {
+        $model = new KomponenGajiModel();
+        $data['komponen'] = $model->find($id);
+
+        if (!$data['komponen']) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Komponen dengan ID $id tidak ditemukan");
+        }
+
+        return view('komponen/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $model = new KomponenGajiModel();
+
+        $data = [
+            'nama_komponen' => $this->request->getPost('nama_komponen'),
+            'kategori'      => $this->request->getPost('kategori'),
+            'jabatan'       => $this->request->getPost('jabatan'),
+            'nominal'       => $this->request->getPost('nominal'),
+            'satuan'        => $this->request->getPost('satuan'),
+        ];
+
+        $model->update($id, $data);
+
+        return redirect()->to('/komponen')->with('success', 'Data komponen gaji berhasil diperbarui.');
+    }
 }
